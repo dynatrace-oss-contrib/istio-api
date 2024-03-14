@@ -1113,6 +1113,35 @@ message MeshConfig {
       //       environment: {}
       // ```
       ResourceDetectors resource_detectors = 5;
+
+      oneof sampling {
+        DynatraceSampler dynatrace_sampler = 6;
+      }
+
+      message DynatraceSampler {
+        // REQUIRED. The Dynatrace tenant.
+        //
+        // The value can be obtained from the Istio deployment page in Dynatrace.
+        string tenant = 1;
+
+        // REQUIRED.The id of the Dynatrace cluster.
+        //
+        // The value can be obtained from the Istio deployment page in Dynatrace.
+        int32 cluster_id = 2;
+
+        // Optional. Number of sampled spans per minute to be used
+        // when the adaptative value cannot be obtained from the Dynatrace API.
+        //
+        // A default value of ``1000`` is used when:
+        //
+        // - `root_spans_per_minute` is unset
+        // - `root_spans_per_minute` is set to 0
+        uint32 root_spans_per_minute = 3;
+
+        // Optional The path to the sampling configuration endpoint in the Dynatrace API.
+        // When omitted, the default path for Dynatrace SaaS is used.
+        string path = 4;
+      }
     }
 
     // Defines configuration for an HTTP service that can be used by an Extension Provider.

@@ -3752,6 +3752,10 @@ type MeshConfig_ExtensionProvider_OpenTelemetryTracingProvider struct {
 	//
 	// ```
 	ResourceDetectors *MeshConfig_ExtensionProvider_ResourceDetectors `protobuf:"bytes,5,opt,name=resource_detectors,json=resourceDetectors,proto3" json:"resource_detectors,omitempty"`
+	// Types that are assignable to Sampling:
+	//
+	//	*MeshConfig_ExtensionProvider_OpenTelemetryTracingProvider_DynatraceSampler_
+	Sampling isMeshConfig_ExtensionProvider_OpenTelemetryTracingProvider_Sampling `protobuf_oneof:"sampling"`
 }
 
 func (x *MeshConfig_ExtensionProvider_OpenTelemetryTracingProvider) Reset() {
@@ -3819,6 +3823,31 @@ func (x *MeshConfig_ExtensionProvider_OpenTelemetryTracingProvider) GetResourceD
 		return x.ResourceDetectors
 	}
 	return nil
+}
+
+func (m *MeshConfig_ExtensionProvider_OpenTelemetryTracingProvider) GetSampling() isMeshConfig_ExtensionProvider_OpenTelemetryTracingProvider_Sampling {
+	if m != nil {
+		return m.Sampling
+	}
+	return nil
+}
+
+func (x *MeshConfig_ExtensionProvider_OpenTelemetryTracingProvider) GetDynatraceSampler() *MeshConfig_ExtensionProvider_OpenTelemetryTracingProvider_DynatraceSampler {
+	if x, ok := x.GetSampling().(*MeshConfig_ExtensionProvider_OpenTelemetryTracingProvider_DynatraceSampler_); ok {
+		return x.DynatraceSampler
+	}
+	return nil
+}
+
+type isMeshConfig_ExtensionProvider_OpenTelemetryTracingProvider_Sampling interface {
+	isMeshConfig_ExtensionProvider_OpenTelemetryTracingProvider_Sampling()
+}
+
+type MeshConfig_ExtensionProvider_OpenTelemetryTracingProvider_DynatraceSampler_ struct {
+	DynatraceSampler *MeshConfig_ExtensionProvider_OpenTelemetryTracingProvider_DynatraceSampler `protobuf:"bytes,6,opt,name=dynatrace_sampler,json=dynatraceSampler,proto3,oneof"`
+}
+
+func (*MeshConfig_ExtensionProvider_OpenTelemetryTracingProvider_DynatraceSampler_) isMeshConfig_ExtensionProvider_OpenTelemetryTracingProvider_Sampling() {
 }
 
 // Defines configuration for an HTTP service that can be used by an Extension Provider.
@@ -4240,6 +4269,92 @@ func (x *MeshConfig_ExtensionProvider_EnvoyOpenTelemetryLogProvider_LogFormat) G
 	return nil
 }
 
+type MeshConfig_ExtensionProvider_OpenTelemetryTracingProvider_DynatraceSampler struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// REQUIRED. The Dynatrace tenant.
+	//
+	// The value can be obtained from the Istio deployment page in Dynatrace.
+	Tenant string `protobuf:"bytes,1,opt,name=tenant,proto3" json:"tenant,omitempty"`
+	// REQUIRED.The id of the Dynatrace cluster.
+	//
+	// The value can be obtained from the Istio deployment page in Dynatrace.
+	ClusterId int32 `protobuf:"varint,2,opt,name=cluster_id,json=clusterId,proto3" json:"cluster_id,omitempty"`
+	// Optional. Number of sampled spans per minute to be used
+	// when the adaptative value cannot be obtained from the Dynatrace API.
+	//
+	// A default value of “1000“ is used when:
+	//
+	// - `root_spans_per_minute` is unset
+	// - `root_spans_per_minute` is set to 0
+	RootSpansPerMinute uint32 `protobuf:"varint,3,opt,name=root_spans_per_minute,json=rootSpansPerMinute,proto3" json:"root_spans_per_minute,omitempty"`
+	// Optional The path to the sampling configuration endpoint in the Dynatrace API.
+	// When omitted, the default path for Dynatrace SaaS is used.
+	Path string `protobuf:"bytes,4,opt,name=path,proto3" json:"path,omitempty"`
+}
+
+func (x *MeshConfig_ExtensionProvider_OpenTelemetryTracingProvider_DynatraceSampler) Reset() {
+	*x = MeshConfig_ExtensionProvider_OpenTelemetryTracingProvider_DynatraceSampler{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_mesh_v1alpha1_config_proto_msgTypes[36]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MeshConfig_ExtensionProvider_OpenTelemetryTracingProvider_DynatraceSampler) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MeshConfig_ExtensionProvider_OpenTelemetryTracingProvider_DynatraceSampler) ProtoMessage() {}
+
+func (x *MeshConfig_ExtensionProvider_OpenTelemetryTracingProvider_DynatraceSampler) ProtoReflect() protoreflect.Message {
+	mi := &file_mesh_v1alpha1_config_proto_msgTypes[36]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MeshConfig_ExtensionProvider_OpenTelemetryTracingProvider_DynatraceSampler.ProtoReflect.Descriptor instead.
+func (*MeshConfig_ExtensionProvider_OpenTelemetryTracingProvider_DynatraceSampler) Descriptor() ([]byte, []int) {
+	return file_mesh_v1alpha1_config_proto_rawDescGZIP(), []int{0, 5, 14, 0}
+}
+
+func (x *MeshConfig_ExtensionProvider_OpenTelemetryTracingProvider_DynatraceSampler) GetTenant() string {
+	if x != nil {
+		return x.Tenant
+	}
+	return ""
+}
+
+func (x *MeshConfig_ExtensionProvider_OpenTelemetryTracingProvider_DynatraceSampler) GetClusterId() int32 {
+	if x != nil {
+		return x.ClusterId
+	}
+	return 0
+}
+
+func (x *MeshConfig_ExtensionProvider_OpenTelemetryTracingProvider_DynatraceSampler) GetRootSpansPerMinute() uint32 {
+	if x != nil {
+		return x.RootSpansPerMinute
+	}
+	return 0
+}
+
+func (x *MeshConfig_ExtensionProvider_OpenTelemetryTracingProvider_DynatraceSampler) GetPath() string {
+	if x != nil {
+		return x.Path
+	}
+	return ""
+}
+
 // OpenTelemetry Environment Resource Detector.
 // The resource detector reads attributes from the environment variable `OTEL_RESOURCE_ATTRIBUTES`
 // and adds them to the OpenTelemetry resource.
@@ -4254,7 +4369,7 @@ type MeshConfig_ExtensionProvider_ResourceDetectors_EnvironmentResourceDetector 
 func (x *MeshConfig_ExtensionProvider_ResourceDetectors_EnvironmentResourceDetector) Reset() {
 	*x = MeshConfig_ExtensionProvider_ResourceDetectors_EnvironmentResourceDetector{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_mesh_v1alpha1_config_proto_msgTypes[36]
+		mi := &file_mesh_v1alpha1_config_proto_msgTypes[37]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4267,7 +4382,7 @@ func (x *MeshConfig_ExtensionProvider_ResourceDetectors_EnvironmentResourceDetec
 func (*MeshConfig_ExtensionProvider_ResourceDetectors_EnvironmentResourceDetector) ProtoMessage() {}
 
 func (x *MeshConfig_ExtensionProvider_ResourceDetectors_EnvironmentResourceDetector) ProtoReflect() protoreflect.Message {
-	mi := &file_mesh_v1alpha1_config_proto_msgTypes[36]
+	mi := &file_mesh_v1alpha1_config_proto_msgTypes[37]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4297,7 +4412,7 @@ type MeshConfig_ExtensionProvider_ResourceDetectors_DynatraceResourceDetector st
 func (x *MeshConfig_ExtensionProvider_ResourceDetectors_DynatraceResourceDetector) Reset() {
 	*x = MeshConfig_ExtensionProvider_ResourceDetectors_DynatraceResourceDetector{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_mesh_v1alpha1_config_proto_msgTypes[37]
+		mi := &file_mesh_v1alpha1_config_proto_msgTypes[38]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4310,7 +4425,7 @@ func (x *MeshConfig_ExtensionProvider_ResourceDetectors_DynatraceResourceDetecto
 func (*MeshConfig_ExtensionProvider_ResourceDetectors_DynatraceResourceDetector) ProtoMessage() {}
 
 func (x *MeshConfig_ExtensionProvider_ResourceDetectors_DynatraceResourceDetector) ProtoReflect() protoreflect.Message {
-	mi := &file_mesh_v1alpha1_config_proto_msgTypes[37]
+	mi := &file_mesh_v1alpha1_config_proto_msgTypes[38]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4348,7 +4463,7 @@ var file_mesh_v1alpha1_config_proto_rawDesc = []byte{
 	0x6f, 0x1a, 0x34, 0x6b, 0x38, 0x73, 0x2e, 0x69, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x6d, 0x61, 0x63,
 	0x68, 0x69, 0x6e, 0x65, 0x72, 0x79, 0x2f, 0x70, 0x6b, 0x67, 0x2f, 0x61, 0x70, 0x69, 0x73, 0x2f,
 	0x6d, 0x65, 0x74, 0x61, 0x2f, 0x76, 0x31, 0x2f, 0x67, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x74, 0x65,
-	0x64, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0xf4, 0x60, 0x0a, 0x0a, 0x4d, 0x65, 0x73, 0x68,
+	0x64, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0xa4, 0x63, 0x0a, 0x0a, 0x4d, 0x65, 0x73, 0x68,
 	0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x12, 0x2a, 0x0a, 0x11, 0x70, 0x72, 0x6f, 0x78, 0x79, 0x5f,
 	0x6c, 0x69, 0x73, 0x74, 0x65, 0x6e, 0x5f, 0x70, 0x6f, 0x72, 0x74, 0x18, 0x04, 0x20, 0x01, 0x28,
 	0x05, 0x52, 0x0f, 0x70, 0x72, 0x6f, 0x78, 0x79, 0x4c, 0x69, 0x73, 0x74, 0x65, 0x6e, 0x50, 0x6f,
@@ -4610,7 +4725,7 @@ var file_mesh_v1alpha1_config_proto_rawDesc = []byte{
 	0x44, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x0e, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73,
 	0x74, 0x54, 0x69, 0x6d, 0x65, 0x6f, 0x75, 0x74, 0x12, 0x1f, 0x0a, 0x0b, 0x69, 0x73, 0x74, 0x69,
 	0x6f, 0x64, 0x5f, 0x73, 0x69, 0x64, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x08, 0x52, 0x0a, 0x69,
-	0x73, 0x74, 0x69, 0x6f, 0x64, 0x53, 0x69, 0x64, 0x65, 0x1a, 0xc4, 0x35, 0x0a, 0x11, 0x45, 0x78,
+	0x73, 0x74, 0x69, 0x6f, 0x64, 0x53, 0x69, 0x64, 0x65, 0x1a, 0xf4, 0x37, 0x0a, 0x11, 0x45, 0x78,
 	0x74, 0x65, 0x6e, 0x73, 0x69, 0x6f, 0x6e, 0x50, 0x72, 0x6f, 0x76, 0x69, 0x64, 0x65, 0x72, 0x12,
 	0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e,
 	0x61, 0x6d, 0x65, 0x12, 0x8b, 0x01, 0x0a, 0x14, 0x65, 0x6e, 0x76, 0x6f, 0x79, 0x5f, 0x65, 0x78,
@@ -4982,7 +5097,7 @@ var file_mesh_v1alpha1_config_proto_rawDesc = []byte{
 	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x74, 0x65, 0x78, 0x74, 0x12, 0x2f, 0x0a, 0x06, 0x6c,
 	0x61, 0x62, 0x65, 0x6c, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x17, 0x2e, 0x67, 0x6f,
 	0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x53, 0x74,
-	0x72, 0x75, 0x63, 0x74, 0x52, 0x06, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x1a, 0xb9, 0x02, 0x0a,
+	0x72, 0x75, 0x63, 0x74, 0x52, 0x06, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x1a, 0xe9, 0x04, 0x0a,
 	0x1c, 0x4f, 0x70, 0x65, 0x6e, 0x54, 0x65, 0x6c, 0x65, 0x6d, 0x65, 0x74, 0x72, 0x79, 0x54, 0x72,
 	0x61, 0x63, 0x69, 0x6e, 0x67, 0x50, 0x72, 0x6f, 0x76, 0x69, 0x64, 0x65, 0x72, 0x12, 0x18, 0x0a,
 	0x07, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07,
@@ -5002,7 +5117,26 @@ var file_mesh_v1alpha1_config_proto_rawDesc = []byte{
 	0x67, 0x2e, 0x45, 0x78, 0x74, 0x65, 0x6e, 0x73, 0x69, 0x6f, 0x6e, 0x50, 0x72, 0x6f, 0x76, 0x69,
 	0x64, 0x65, 0x72, 0x2e, 0x52, 0x65, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x44, 0x65, 0x74, 0x65,
 	0x63, 0x74, 0x6f, 0x72, 0x73, 0x52, 0x11, 0x72, 0x65, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x44,
-	0x65, 0x74, 0x65, 0x63, 0x74, 0x6f, 0x72, 0x73, 0x1a, 0xae, 0x01, 0x0a, 0x0b, 0x48, 0x74, 0x74,
+	0x65, 0x74, 0x65, 0x63, 0x74, 0x6f, 0x72, 0x73, 0x12, 0x8e, 0x01, 0x0a, 0x11, 0x64, 0x79, 0x6e,
+	0x61, 0x74, 0x72, 0x61, 0x63, 0x65, 0x5f, 0x73, 0x61, 0x6d, 0x70, 0x6c, 0x65, 0x72, 0x18, 0x06,
+	0x20, 0x01, 0x28, 0x0b, 0x32, 0x5f, 0x2e, 0x69, 0x73, 0x74, 0x69, 0x6f, 0x2e, 0x6d, 0x65, 0x73,
+	0x68, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x4d, 0x65, 0x73, 0x68, 0x43,
+	0x6f, 0x6e, 0x66, 0x69, 0x67, 0x2e, 0x45, 0x78, 0x74, 0x65, 0x6e, 0x73, 0x69, 0x6f, 0x6e, 0x50,
+	0x72, 0x6f, 0x76, 0x69, 0x64, 0x65, 0x72, 0x2e, 0x4f, 0x70, 0x65, 0x6e, 0x54, 0x65, 0x6c, 0x65,
+	0x6d, 0x65, 0x74, 0x72, 0x79, 0x54, 0x72, 0x61, 0x63, 0x69, 0x6e, 0x67, 0x50, 0x72, 0x6f, 0x76,
+	0x69, 0x64, 0x65, 0x72, 0x2e, 0x44, 0x79, 0x6e, 0x61, 0x74, 0x72, 0x61, 0x63, 0x65, 0x53, 0x61,
+	0x6d, 0x70, 0x6c, 0x65, 0x72, 0x48, 0x00, 0x52, 0x10, 0x64, 0x79, 0x6e, 0x61, 0x74, 0x72, 0x61,
+	0x63, 0x65, 0x53, 0x61, 0x6d, 0x70, 0x6c, 0x65, 0x72, 0x1a, 0x90, 0x01, 0x0a, 0x10, 0x44, 0x79,
+	0x6e, 0x61, 0x74, 0x72, 0x61, 0x63, 0x65, 0x53, 0x61, 0x6d, 0x70, 0x6c, 0x65, 0x72, 0x12, 0x16,
+	0x0a, 0x06, 0x74, 0x65, 0x6e, 0x61, 0x6e, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06,
+	0x74, 0x65, 0x6e, 0x61, 0x6e, 0x74, 0x12, 0x1d, 0x0a, 0x0a, 0x63, 0x6c, 0x75, 0x73, 0x74, 0x65,
+	0x72, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x09, 0x63, 0x6c, 0x75, 0x73,
+	0x74, 0x65, 0x72, 0x49, 0x64, 0x12, 0x31, 0x0a, 0x15, 0x72, 0x6f, 0x6f, 0x74, 0x5f, 0x73, 0x70,
+	0x61, 0x6e, 0x73, 0x5f, 0x70, 0x65, 0x72, 0x5f, 0x6d, 0x69, 0x6e, 0x75, 0x74, 0x65, 0x18, 0x03,
+	0x20, 0x01, 0x28, 0x0d, 0x52, 0x12, 0x72, 0x6f, 0x6f, 0x74, 0x53, 0x70, 0x61, 0x6e, 0x73, 0x50,
+	0x65, 0x72, 0x4d, 0x69, 0x6e, 0x75, 0x74, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x70, 0x61, 0x74, 0x68,
+	0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x70, 0x61, 0x74, 0x68, 0x42, 0x0a, 0x0a, 0x08,
+	0x73, 0x61, 0x6d, 0x70, 0x6c, 0x69, 0x6e, 0x67, 0x1a, 0xae, 0x01, 0x0a, 0x0b, 0x48, 0x74, 0x74,
 	0x70, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x70, 0x61, 0x74, 0x68,
 	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x70, 0x61, 0x74, 0x68, 0x12, 0x33, 0x0a, 0x07,
 	0x74, 0x69, 0x6d, 0x65, 0x6f, 0x75, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x19, 0x2e,
@@ -5162,7 +5296,7 @@ func file_mesh_v1alpha1_config_proto_rawDescGZIP() []byte {
 }
 
 var file_mesh_v1alpha1_config_proto_enumTypes = make([]protoimpl.EnumInfo, 10)
-var file_mesh_v1alpha1_config_proto_msgTypes = make([]protoimpl.MessageInfo, 38)
+var file_mesh_v1alpha1_config_proto_msgTypes = make([]protoimpl.MessageInfo, 39)
 var file_mesh_v1alpha1_config_proto_goTypes = []interface{}{
 	(Resource)(0),                              // 0: istio.mesh.v1alpha1.Resource
 	(MeshConfig_IngressControllerMode)(0),      // 1: istio.mesh.v1alpha1.MeshConfig.IngressControllerMode
@@ -5210,53 +5344,54 @@ var file_mesh_v1alpha1_config_proto_goTypes = []interface{}{
 	nil, // 43: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.StackdriverProvider.Logging.LabelsEntry
 	(*MeshConfig_ExtensionProvider_EnvoyFileAccessLogProvider_LogFormat)(nil),          // 44: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.EnvoyFileAccessLogProvider.LogFormat
 	(*MeshConfig_ExtensionProvider_EnvoyOpenTelemetryLogProvider_LogFormat)(nil),       // 45: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.EnvoyOpenTelemetryLogProvider.LogFormat
-	(*MeshConfig_ExtensionProvider_ResourceDetectors_EnvironmentResourceDetector)(nil), // 46: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.ResourceDetectors.EnvironmentResourceDetector
-	(*MeshConfig_ExtensionProvider_ResourceDetectors_DynatraceResourceDetector)(nil),   // 47: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.ResourceDetectors.DynatraceResourceDetector
-	(*duration.Duration)(nil), // 48: google.protobuf.Duration
-	(*v1alpha3.ConnectionPoolSettings_TCPSettings_TcpKeepalive)(nil), // 49: istio.networking.v1alpha3.ConnectionPoolSettings.TCPSettings.TcpKeepalive
-	(*ProxyConfig)(nil),                          // 50: istio.mesh.v1alpha1.ProxyConfig
-	(*wrappers.BoolValue)(nil),                   // 51: google.protobuf.BoolValue
-	(*v1alpha3.LocalityLoadBalancerSetting)(nil), // 52: istio.networking.v1alpha3.LocalityLoadBalancerSetting
-	(*v1.LabelSelector)(nil),                     // 53: k8s.io.apimachinery.pkg.apis.meta.v1.LabelSelector
-	(*v1alpha3.HTTPRetry)(nil),                   // 54: istio.networking.v1alpha3.HTTPRetry
-	(*v1alpha3.ClientTLSSettings)(nil),           // 55: istio.networking.v1alpha3.ClientTLSSettings
-	(*wrappers.Int64Value)(nil),                  // 56: google.protobuf.Int64Value
-	(*_struct.Struct)(nil),                       // 57: google.protobuf.Struct
+	(*MeshConfig_ExtensionProvider_OpenTelemetryTracingProvider_DynatraceSampler)(nil), // 46: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.OpenTelemetryTracingProvider.DynatraceSampler
+	(*MeshConfig_ExtensionProvider_ResourceDetectors_EnvironmentResourceDetector)(nil), // 47: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.ResourceDetectors.EnvironmentResourceDetector
+	(*MeshConfig_ExtensionProvider_ResourceDetectors_DynatraceResourceDetector)(nil),   // 48: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.ResourceDetectors.DynatraceResourceDetector
+	(*duration.Duration)(nil), // 49: google.protobuf.Duration
+	(*v1alpha3.ConnectionPoolSettings_TCPSettings_TcpKeepalive)(nil), // 50: istio.networking.v1alpha3.ConnectionPoolSettings.TCPSettings.TcpKeepalive
+	(*ProxyConfig)(nil),                          // 51: istio.mesh.v1alpha1.ProxyConfig
+	(*wrappers.BoolValue)(nil),                   // 52: google.protobuf.BoolValue
+	(*v1alpha3.LocalityLoadBalancerSetting)(nil), // 53: istio.networking.v1alpha3.LocalityLoadBalancerSetting
+	(*v1.LabelSelector)(nil),                     // 54: k8s.io.apimachinery.pkg.apis.meta.v1.LabelSelector
+	(*v1alpha3.HTTPRetry)(nil),                   // 55: istio.networking.v1alpha3.HTTPRetry
+	(*v1alpha3.ClientTLSSettings)(nil),           // 56: istio.networking.v1alpha3.ClientTLSSettings
+	(*wrappers.Int64Value)(nil),                  // 57: google.protobuf.Int64Value
+	(*_struct.Struct)(nil),                       // 58: google.protobuf.Struct
 }
 var file_mesh_v1alpha1_config_proto_depIdxs = []int32{
-	48, // 0: istio.mesh.v1alpha1.MeshConfig.connect_timeout:type_name -> google.protobuf.Duration
-	48, // 1: istio.mesh.v1alpha1.MeshConfig.protocol_detection_timeout:type_name -> google.protobuf.Duration
-	49, // 2: istio.mesh.v1alpha1.MeshConfig.tcp_keepalive:type_name -> istio.networking.v1alpha3.ConnectionPoolSettings.TCPSettings.TcpKeepalive
+	49, // 0: istio.mesh.v1alpha1.MeshConfig.connect_timeout:type_name -> google.protobuf.Duration
+	49, // 1: istio.mesh.v1alpha1.MeshConfig.protocol_detection_timeout:type_name -> google.protobuf.Duration
+	50, // 2: istio.mesh.v1alpha1.MeshConfig.tcp_keepalive:type_name -> istio.networking.v1alpha3.ConnectionPoolSettings.TCPSettings.TcpKeepalive
 	1,  // 3: istio.mesh.v1alpha1.MeshConfig.ingress_controller_mode:type_name -> istio.mesh.v1alpha1.MeshConfig.IngressControllerMode
 	3,  // 4: istio.mesh.v1alpha1.MeshConfig.access_log_encoding:type_name -> istio.mesh.v1alpha1.MeshConfig.AccessLogEncoding
-	50, // 5: istio.mesh.v1alpha1.MeshConfig.default_config:type_name -> istio.mesh.v1alpha1.ProxyConfig
+	51, // 5: istio.mesh.v1alpha1.MeshConfig.default_config:type_name -> istio.mesh.v1alpha1.ProxyConfig
 	13, // 6: istio.mesh.v1alpha1.MeshConfig.outbound_traffic_policy:type_name -> istio.mesh.v1alpha1.MeshConfig.OutboundTrafficPolicy
 	14, // 7: istio.mesh.v1alpha1.MeshConfig.inbound_traffic_policy:type_name -> istio.mesh.v1alpha1.MeshConfig.InboundTrafficPolicy
 	11, // 8: istio.mesh.v1alpha1.MeshConfig.config_sources:type_name -> istio.mesh.v1alpha1.ConfigSource
-	51, // 9: istio.mesh.v1alpha1.MeshConfig.enable_auto_mtls:type_name -> google.protobuf.BoolValue
+	52, // 9: istio.mesh.v1alpha1.MeshConfig.enable_auto_mtls:type_name -> google.protobuf.BoolValue
 	15, // 10: istio.mesh.v1alpha1.MeshConfig.ca_certificates:type_name -> istio.mesh.v1alpha1.MeshConfig.CertificateData
-	52, // 11: istio.mesh.v1alpha1.MeshConfig.locality_lb_setting:type_name -> istio.networking.v1alpha3.LocalityLoadBalancerSetting
-	48, // 12: istio.mesh.v1alpha1.MeshConfig.dns_refresh_rate:type_name -> google.protobuf.Duration
+	53, // 11: istio.mesh.v1alpha1.MeshConfig.locality_lb_setting:type_name -> istio.networking.v1alpha3.LocalityLoadBalancerSetting
+	49, // 12: istio.mesh.v1alpha1.MeshConfig.dns_refresh_rate:type_name -> google.protobuf.Duration
 	4,  // 13: istio.mesh.v1alpha1.MeshConfig.h2_upgrade_policy:type_name -> istio.mesh.v1alpha1.MeshConfig.H2UpgradePolicy
 	12, // 14: istio.mesh.v1alpha1.MeshConfig.certificates:type_name -> istio.mesh.v1alpha1.Certificate
 	16, // 15: istio.mesh.v1alpha1.MeshConfig.service_settings:type_name -> istio.mesh.v1alpha1.MeshConfig.ServiceSettings
-	51, // 16: istio.mesh.v1alpha1.MeshConfig.enable_prometheus_merge:type_name -> google.protobuf.BoolValue
-	51, // 17: istio.mesh.v1alpha1.MeshConfig.verify_certificate_at_client:type_name -> google.protobuf.BoolValue
+	52, // 16: istio.mesh.v1alpha1.MeshConfig.enable_prometheus_merge:type_name -> google.protobuf.BoolValue
+	52, // 17: istio.mesh.v1alpha1.MeshConfig.verify_certificate_at_client:type_name -> google.protobuf.BoolValue
 	17, // 18: istio.mesh.v1alpha1.MeshConfig.ca:type_name -> istio.mesh.v1alpha1.MeshConfig.CA
 	18, // 19: istio.mesh.v1alpha1.MeshConfig.extension_providers:type_name -> istio.mesh.v1alpha1.MeshConfig.ExtensionProvider
 	19, // 20: istio.mesh.v1alpha1.MeshConfig.default_providers:type_name -> istio.mesh.v1alpha1.MeshConfig.DefaultProviders
-	53, // 21: istio.mesh.v1alpha1.MeshConfig.discovery_selectors:type_name -> k8s.io.apimachinery.pkg.apis.meta.v1.LabelSelector
+	54, // 21: istio.mesh.v1alpha1.MeshConfig.discovery_selectors:type_name -> k8s.io.apimachinery.pkg.apis.meta.v1.LabelSelector
 	20, // 22: istio.mesh.v1alpha1.MeshConfig.path_normalization:type_name -> istio.mesh.v1alpha1.MeshConfig.ProxyPathNormalization
-	54, // 23: istio.mesh.v1alpha1.MeshConfig.default_http_retry_policy:type_name -> istio.networking.v1alpha3.HTTPRetry
+	55, // 23: istio.mesh.v1alpha1.MeshConfig.default_http_retry_policy:type_name -> istio.networking.v1alpha3.HTTPRetry
 	21, // 24: istio.mesh.v1alpha1.MeshConfig.mesh_mTLS:type_name -> istio.mesh.v1alpha1.MeshConfig.TLSConfig
 	21, // 25: istio.mesh.v1alpha1.MeshConfig.tls_defaults:type_name -> istio.mesh.v1alpha1.MeshConfig.TLSConfig
-	55, // 26: istio.mesh.v1alpha1.ConfigSource.tls_settings:type_name -> istio.networking.v1alpha3.ClientTLSSettings
+	56, // 26: istio.mesh.v1alpha1.ConfigSource.tls_settings:type_name -> istio.networking.v1alpha3.ClientTLSSettings
 	0,  // 27: istio.mesh.v1alpha1.ConfigSource.subscribed_resources:type_name -> istio.mesh.v1alpha1.Resource
 	5,  // 28: istio.mesh.v1alpha1.MeshConfig.OutboundTrafficPolicy.mode:type_name -> istio.mesh.v1alpha1.MeshConfig.OutboundTrafficPolicy.Mode
 	6,  // 29: istio.mesh.v1alpha1.MeshConfig.InboundTrafficPolicy.mode:type_name -> istio.mesh.v1alpha1.MeshConfig.InboundTrafficPolicy.Mode
 	22, // 30: istio.mesh.v1alpha1.MeshConfig.ServiceSettings.settings:type_name -> istio.mesh.v1alpha1.MeshConfig.ServiceSettings.Settings
-	55, // 31: istio.mesh.v1alpha1.MeshConfig.CA.tls_settings:type_name -> istio.networking.v1alpha3.ClientTLSSettings
-	48, // 32: istio.mesh.v1alpha1.MeshConfig.CA.request_timeout:type_name -> google.protobuf.Duration
+	56, // 31: istio.mesh.v1alpha1.MeshConfig.CA.tls_settings:type_name -> istio.networking.v1alpha3.ClientTLSSettings
+	49, // 32: istio.mesh.v1alpha1.MeshConfig.CA.request_timeout:type_name -> google.protobuf.Duration
 	24, // 33: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.envoy_ext_authz_http:type_name -> istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.EnvoyExternalAuthorizationHttpProvider
 	25, // 34: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.envoy_ext_authz_grpc:type_name -> istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.EnvoyExternalAuthorizationGrpcProvider
 	26, // 35: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.zipkin:type_name -> istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.ZipkinTracingProvider
@@ -5273,32 +5408,33 @@ var file_mesh_v1alpha1_config_proto_depIdxs = []int32{
 	36, // 46: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.envoy_otel_als:type_name -> istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.EnvoyOpenTelemetryLogProvider
 	8,  // 47: istio.mesh.v1alpha1.MeshConfig.ProxyPathNormalization.normalization:type_name -> istio.mesh.v1alpha1.MeshConfig.ProxyPathNormalization.NormalizationType
 	9,  // 48: istio.mesh.v1alpha1.MeshConfig.TLSConfig.min_protocol_version:type_name -> istio.mesh.v1alpha1.MeshConfig.TLSConfig.TLSProtocol
-	48, // 49: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.EnvoyExternalAuthorizationHttpProvider.timeout:type_name -> google.protobuf.Duration
+	49, // 49: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.EnvoyExternalAuthorizationHttpProvider.timeout:type_name -> google.protobuf.Duration
 	41, // 50: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.EnvoyExternalAuthorizationHttpProvider.include_additional_headers_in_check:type_name -> istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.EnvoyExternalAuthorizationHttpProvider.IncludeAdditionalHeadersInCheckEntry
 	23, // 51: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.EnvoyExternalAuthorizationHttpProvider.include_request_body_in_check:type_name -> istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.EnvoyExternalAuthorizationRequestBody
-	48, // 52: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.EnvoyExternalAuthorizationGrpcProvider.timeout:type_name -> google.protobuf.Duration
+	49, // 52: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.EnvoyExternalAuthorizationGrpcProvider.timeout:type_name -> google.protobuf.Duration
 	23, // 53: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.EnvoyExternalAuthorizationGrpcProvider.include_request_body_in_check:type_name -> istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.EnvoyExternalAuthorizationRequestBody
-	56, // 54: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.StackdriverProvider.max_number_of_attributes:type_name -> google.protobuf.Int64Value
-	56, // 55: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.StackdriverProvider.max_number_of_annotations:type_name -> google.protobuf.Int64Value
-	56, // 56: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.StackdriverProvider.max_number_of_message_events:type_name -> google.protobuf.Int64Value
+	57, // 54: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.StackdriverProvider.max_number_of_attributes:type_name -> google.protobuf.Int64Value
+	57, // 55: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.StackdriverProvider.max_number_of_annotations:type_name -> google.protobuf.Int64Value
+	57, // 56: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.StackdriverProvider.max_number_of_message_events:type_name -> google.protobuf.Int64Value
 	42, // 57: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.StackdriverProvider.logging:type_name -> istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.StackdriverProvider.Logging
 	7,  // 58: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.OpenCensusAgentTracingProvider.context:type_name -> istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.OpenCensusAgentTracingProvider.TraceContext
 	44, // 59: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.EnvoyFileAccessLogProvider.log_format:type_name -> istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.EnvoyFileAccessLogProvider.LogFormat
 	45, // 60: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.EnvoyOpenTelemetryLogProvider.log_format:type_name -> istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.EnvoyOpenTelemetryLogProvider.LogFormat
 	38, // 61: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.OpenTelemetryTracingProvider.http:type_name -> istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.HttpService
 	40, // 62: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.OpenTelemetryTracingProvider.resource_detectors:type_name -> istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.ResourceDetectors
-	48, // 63: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.HttpService.timeout:type_name -> google.protobuf.Duration
-	39, // 64: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.HttpService.headers:type_name -> istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.HttpHeader
-	46, // 65: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.ResourceDetectors.environment:type_name -> istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.ResourceDetectors.EnvironmentResourceDetector
-	47, // 66: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.ResourceDetectors.dynatrace:type_name -> istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.ResourceDetectors.DynatraceResourceDetector
-	43, // 67: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.StackdriverProvider.Logging.labels:type_name -> istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.StackdriverProvider.Logging.LabelsEntry
-	57, // 68: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.EnvoyFileAccessLogProvider.LogFormat.labels:type_name -> google.protobuf.Struct
-	57, // 69: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.EnvoyOpenTelemetryLogProvider.LogFormat.labels:type_name -> google.protobuf.Struct
-	70, // [70:70] is the sub-list for method output_type
-	70, // [70:70] is the sub-list for method input_type
-	70, // [70:70] is the sub-list for extension type_name
-	70, // [70:70] is the sub-list for extension extendee
-	0,  // [0:70] is the sub-list for field type_name
+	46, // 63: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.OpenTelemetryTracingProvider.dynatrace_sampler:type_name -> istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.OpenTelemetryTracingProvider.DynatraceSampler
+	49, // 64: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.HttpService.timeout:type_name -> google.protobuf.Duration
+	39, // 65: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.HttpService.headers:type_name -> istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.HttpHeader
+	47, // 66: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.ResourceDetectors.environment:type_name -> istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.ResourceDetectors.EnvironmentResourceDetector
+	48, // 67: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.ResourceDetectors.dynatrace:type_name -> istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.ResourceDetectors.DynatraceResourceDetector
+	43, // 68: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.StackdriverProvider.Logging.labels:type_name -> istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.StackdriverProvider.Logging.LabelsEntry
+	58, // 69: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.EnvoyFileAccessLogProvider.LogFormat.labels:type_name -> google.protobuf.Struct
+	58, // 70: istio.mesh.v1alpha1.MeshConfig.ExtensionProvider.EnvoyOpenTelemetryLogProvider.LogFormat.labels:type_name -> google.protobuf.Struct
+	71, // [71:71] is the sub-list for method output_type
+	71, // [71:71] is the sub-list for method input_type
+	71, // [71:71] is the sub-list for extension type_name
+	71, // [71:71] is the sub-list for extension extendee
+	0,  // [0:71] is the sub-list for field type_name
 }
 
 func init() { file_mesh_v1alpha1_config_proto_init() }
@@ -5717,7 +5853,7 @@ func file_mesh_v1alpha1_config_proto_init() {
 			}
 		}
 		file_mesh_v1alpha1_config_proto_msgTypes[36].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*MeshConfig_ExtensionProvider_ResourceDetectors_EnvironmentResourceDetector); i {
+			switch v := v.(*MeshConfig_ExtensionProvider_OpenTelemetryTracingProvider_DynatraceSampler); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5729,6 +5865,18 @@ func file_mesh_v1alpha1_config_proto_init() {
 			}
 		}
 		file_mesh_v1alpha1_config_proto_msgTypes[37].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MeshConfig_ExtensionProvider_ResourceDetectors_EnvironmentResourceDetector); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_mesh_v1alpha1_config_proto_msgTypes[38].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*MeshConfig_ExtensionProvider_ResourceDetectors_DynatraceResourceDetector); i {
 			case 0:
 				return &v.state
@@ -5761,6 +5909,9 @@ func file_mesh_v1alpha1_config_proto_init() {
 		(*MeshConfig_ExtensionProvider_EnvoyTcpAls)(nil),
 		(*MeshConfig_ExtensionProvider_EnvoyOtelAls)(nil),
 	}
+	file_mesh_v1alpha1_config_proto_msgTypes[27].OneofWrappers = []interface{}{
+		(*MeshConfig_ExtensionProvider_OpenTelemetryTracingProvider_DynatraceSampler_)(nil),
+	}
 	file_mesh_v1alpha1_config_proto_msgTypes[34].OneofWrappers = []interface{}{
 		(*MeshConfig_ExtensionProvider_EnvoyFileAccessLogProvider_LogFormat_Text)(nil),
 		(*MeshConfig_ExtensionProvider_EnvoyFileAccessLogProvider_LogFormat_Labels)(nil),
@@ -5771,7 +5922,7 @@ func file_mesh_v1alpha1_config_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_mesh_v1alpha1_config_proto_rawDesc,
 			NumEnums:      10,
-			NumMessages:   38,
+			NumMessages:   39,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
