@@ -1138,9 +1138,26 @@ message MeshConfig {
         // - `root_spans_per_minute` is set to 0
         uint32 root_spans_per_minute = 3;
 
-        // Optional The path to the sampling configuration endpoint in the Dynatrace API.
-        // When omitted, the default path for Dynatrace SaaS is used.
-        string path = 4;
+        // Optional. Dynatrace API configuration to obtain sampling configuration.
+        //
+        // When not provided, the Dynatrace Sampler will re-use the configuration from the OpenTelemetryTracingProvider HTTP Exporter
+        // (`service`, `port` and `http`), including the access token.
+        DynatraceApi dynatrace_api = 5;
+
+        message DynatraceApi {
+          // REQUIRED. Specifies the Dynatrace environment to obtain the sampling configuration.
+          // The format is `<Hostname>`. The `<Hostname>` is the fully qualified Dynatrace environment
+          // host name defined in the ServiceEntry.
+          //
+          // Example: "{your-environment-id}.live.dynatrace.com".
+          string service = 1;
+
+          // REQUIRED. Specifies the port of the service.
+          uint32 port = 2;
+
+          // REQUIRED. Specifies sampling configuration URI.
+          HttpService http = 3;
+        }
       }
     }
 
