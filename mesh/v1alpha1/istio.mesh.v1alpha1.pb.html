@@ -2403,6 +2403,24 @@ No
 <td><code>dynatraceSampler</code></td>
 <td><code><a href="#MeshConfig-ExtensionProvider-OpenTelemetryTracingProvider-DynatraceSampler">DynatraceSampler (oneof)</a></code></td>
 <td>
+<p>The Dynatrace adaptive traffic management (ATM) sampler.</p>
+<p>Example configuration:</p>
+<pre><code class="language-yaml">- name: otel-tracing
+  opentelemetry:
+    port: 443
+    service: &quot;{your-environment-id}.live.dynatrace.com&quot;
+    http:
+      path: &quot;/api/v2/otlp/v1/traces&quot;
+      timeout: 10s
+      headers:
+        - name: &quot;Authorization&quot;
+          value: &quot;Api-Token dt0c01.&quot;
+    resource_detectors:
+      dynatrace: {}
+    dynatrace_sampler:
+      tenant: &quot;{your-environment-id}&quot;
+      cluster_id: 1234</code></pre>
+
 </td>
 <td>
 No
@@ -2710,7 +2728,7 @@ No
 <td><code>uint32</code></td>
 <td>
 <p>Optional. Number of sampled spans per minute to be used
-when the adaptative value cannot be obtained from the Dynatrace API.</p>
+when the adaptive value cannot be obtained from the Dynatrace API.</p>
 <p>A default value of <code>1000</code> is used when:</p>
 <ul>
 <li><code>root_spans_per_minute</code> is unset</li>
@@ -2722,11 +2740,11 @@ when the adaptative value cannot be obtained from the Dynatrace API.</p>
 No
 </td>
 </tr>
-<tr id="MeshConfig-ExtensionProvider-OpenTelemetryTracingProvider-DynatraceSampler-dynatrace_api">
-<td><code>dynatraceApi</code></td>
+<tr id="MeshConfig-ExtensionProvider-OpenTelemetryTracingProvider-DynatraceSampler-http_service">
+<td><code>httpService</code></td>
 <td><code><a href="#MeshConfig-ExtensionProvider-OpenTelemetryTracingProvider-DynatraceSampler-DynatraceApi">DynatraceApi</a></code></td>
 <td>
-<p>Optional. Dynatrace API configuration to obtain sampling configuration.</p>
+<p>Optional. Dynatrace HTTP API to obtain sampling configuration.</p>
 <p>When not provided, the Dynatrace Sampler will re-use the configuration from the OpenTelemetryTracingProvider HTTP Exporter
 (<code>service</code>, <code>port</code> and <code>http</code>), including the access token.</p>
 

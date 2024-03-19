@@ -1114,7 +1114,30 @@ message MeshConfig {
       // ```
       ResourceDetectors resource_detectors = 5;
 
+      // Optional. Configure a [Sampler](https://opentelemetry.io/docs/specs/otel/trace/sdk/#sampler)
+      // to be used by the OpenTelemetry Tracer.
       oneof sampling {
+
+        // The Dynatrace adaptive traffic management (ATM) sampler.
+        //
+        // Example configuration:
+        //
+        // ```yaml
+        // - name: otel-tracing
+        //   opentelemetry:
+        //     port: 443
+        //     service: "{your-environment-id}.live.dynatrace.com"
+        //     http:
+        //       path: "/api/v2/otlp/v1/traces"
+        //       timeout: 10s
+        //       headers:
+        //         - name: "Authorization"
+        //           value: "Api-Token dt0c01."
+        //     resource_detectors:
+        //       dynatrace: {}
+        //     dynatrace_sampler:
+        //       tenant: "{your-environment-id}"
+        //       cluster_id: 1234
         DynatraceSampler dynatrace_sampler = 6;
       }
 
@@ -1130,7 +1153,7 @@ message MeshConfig {
         int32 cluster_id = 2;
 
         // Optional. Number of sampled spans per minute to be used
-        // when the adaptative value cannot be obtained from the Dynatrace API.
+        // when the adaptive value cannot be obtained from the Dynatrace API.
         //
         // A default value of ``1000`` is used when:
         //
@@ -1138,11 +1161,11 @@ message MeshConfig {
         // - `root_spans_per_minute` is set to 0
         uint32 root_spans_per_minute = 3;
 
-        // Optional. Dynatrace API configuration to obtain sampling configuration.
+        // Optional. Dynatrace HTTP API to obtain sampling configuration.
         //
         // When not provided, the Dynatrace Sampler will re-use the configuration from the OpenTelemetryTracingProvider HTTP Exporter
         // (`service`, `port` and `http`), including the access token.
-        DynatraceApi dynatrace_api = 5;
+        DynatraceApi http_service = 4;
 
         message DynatraceApi {
           // REQUIRED. Specifies the Dynatrace environment to obtain the sampling configuration.
