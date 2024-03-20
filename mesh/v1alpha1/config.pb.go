@@ -4301,7 +4301,7 @@ type MeshConfig_ExtensionProvider_OpenTelemetryTracingProvider_DynatraceSampler 
 	//
 	// The value can be obtained from the Istio deployment page in Dynatrace.
 	Tenant string `protobuf:"bytes,1,opt,name=tenant,proto3" json:"tenant,omitempty"`
-	// REQUIRED.The id of the Dynatrace cluster.
+	// REQUIRED. The id of the Dynatrace cluster.
 	//
 	// The value can be obtained from the Istio deployment page in Dynatrace.
 	ClusterId int32 `protobuf:"varint,2,opt,name=cluster_id,json=clusterId,proto3" json:"cluster_id,omitempty"`
@@ -4386,7 +4386,7 @@ type MeshConfig_ExtensionProvider_OpenTelemetryTracingProvider_DynatraceSampler_
 	unknownFields protoimpl.UnknownFields
 
 	// REQUIRED. Specifies the Dynatrace environment to obtain the sampling configuration.
-	// The format is `<Hostname>`. The `<Hostname>` is the fully qualified Dynatrace environment
+	// The format is `<Hostname>`, where `<Hostname>` is the fully qualified Dynatrace environment
 	// host name defined in the ServiceEntry.
 	//
 	// Example: "{your-environment-id}.live.dynatrace.com".

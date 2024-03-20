@@ -1147,7 +1147,7 @@ message MeshConfig {
         // The value can be obtained from the Istio deployment page in Dynatrace.
         string tenant = 1;
 
-        // REQUIRED.The id of the Dynatrace cluster.
+        // REQUIRED. The id of the Dynatrace cluster.
         //
         // The value can be obtained from the Istio deployment page in Dynatrace.
         int32 cluster_id = 2;
@@ -1169,7 +1169,7 @@ message MeshConfig {
 
         message DynatraceApi {
           // REQUIRED. Specifies the Dynatrace environment to obtain the sampling configuration.
-          // The format is `<Hostname>`. The `<Hostname>` is the fully qualified Dynatrace environment
+          // The format is `<Hostname>`, where `<Hostname>` is the fully qualified Dynatrace environment
           // host name defined in the ServiceEntry.
           //
           // Example: "{your-environment-id}.live.dynatrace.com".
